@@ -20,5 +20,18 @@ if __name__ == '__main__':
     plt.show()
 
     # --- Time spent solving ---
-    totalTimeSpent = os.secondsToTime(sum(df['Time']))
-    print(totalTimeSpent)
+    totalTimeSpent = os.SecondsToTime(sum(df['Time']))
+
+    uniqueDates = os.GetUniqueDates(df['Date'])
+    totalTimeByDate = []
+    totalSolvesByDate = []
+    for i in uniqueDates:
+        recordsAtDate = df[df['Date'].str[0:10] == i] # Get all records at the given
+        totalTimeByDate.append(sum(recordsAtDate['Time']))
+        totalSolvesByDate.append(len(recordsAtDate['Time']))
+
+    plt.plot(os.RemoveYears(uniqueDates), totalTimeByDate)
+    plt.plot(os.RemoveYears(uniqueDates), totalSolvesByDate)
+
+    plt.legend(['Time spent (s)', 'Solves'])
+    plt.show()
