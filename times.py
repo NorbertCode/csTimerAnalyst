@@ -14,7 +14,7 @@ def CalculateAO(times, ao = 5):
 
             # todo: debug only - remove this later
             if i < 10:
-                print(times[i - (ao - 1):i + 1], CalculateAverage(times[i - (ao - 1):i + 1]), "\n")
+                print(times[i - (ao - 1):i + 1], CalculateAverage(times[i - (ao - 1):i + 1]), '\n')
         else:
             averages.append(times[0])
 

@@ -1,21 +1,24 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 
-import timesFunctions as tf
+import times as times
+import overallStats as os
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     df = pd.read_csv('v_perm.csv', delimiter=';')
 
-    # --- Solving times ---
+    # --- Solving times, averages ---
     plt.plot(df['No.'],df['Time'])
 
-    plt.plot(df['No.'], tf.CalculateAO(df['Time'].tolist()))
-    plt.plot(df['No.'], tf.CalculateAO(df['Time'].tolist(), 12))
+    plt.plot(df['No.'], times.CalculateAO(df['Time'].tolist()))
+    plt.plot(df['No.'], times.CalculateAO(df['Time'].tolist(), 12))
 
-    timeNumbers, personalbests = tf.PersonalBestProgression(df['Time'].tolist())
-    plt.plot(timeNumbers, personalbests)
+    timeNumbers, personalbests = times.PersonalBestProgression(df['Time'].tolist())
+    plt.plot(timeNumbers, personalbests, 'o')
 
-    plt.legend(["single", "ao5", "ao12", "pb"])
+    plt.legend(['single', 'ao5', 'ao12', 'pb'])
     plt.show()
 
     # --- Time spent solving ---
+    totalTimeSpent = os.secondsToTime(sum(df['Time']))
+    print(totalTimeSpent)
