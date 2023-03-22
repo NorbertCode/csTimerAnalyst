@@ -1,6 +1,6 @@
-from datetime import datetime as dt, timedelta as tDelta
 import pandas as pd
 from matplotlib import pyplot as plt
+from datetime import timedelta, datetime as dt
 
 import times as times
 import overallStats as os
@@ -22,8 +22,8 @@ if __name__ == '__main__':
 
     # --- Time spent solving ---
     totalTimeSpent = os.SecondsToTime(sum(df['Time']))
-    mostDaysInARow = 0 # todo: show this
-    mostDaysBreak = 0 # todo: show this
+    mostDaysInARow = 0
+    mostDaysBreak = 0
 
     firstDay = dt.strptime(df['Date'][0], '%Y-%m-%d %H:%M:%S')
     dateDelta =  dt.strptime(df['Date'][len(df['Date']) - 1], '%Y-%m-%d %H:%M:%S') - firstDay # Difference between last and first record's date
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     daysInARow = 0
     daysBreak = 0
     for i in range(dateDelta.days + 1):
-        day = (firstDay + tDelta(days = i)).date()
+        day = (firstDay + timedelta(days = i)).date()
 
         recordsAtDate = df[df['Date'].str[0:10] == day.strftime('%Y-%m-%d')] # Get all records at the given date
         totalTimeByDate.append(sum(recordsAtDate['Time']))
@@ -54,6 +54,10 @@ if __name__ == '__main__':
 
     plt.plot(allDays, totalTimeByDate)
     plt.plot(allDays, totalSolvesByDate)
+
+    print(mostDaysInARow)
+    print(mostDaysBreak)
+    print('The most solves (', max(totalSolvesByDate), ') were done on ', allDays[totalSolvesByDate.index(max(totalSolvesByDate))], '. The total time spent that day is ', os.SecondsToTime(totalTimeByDate[totalSolvesByDate.index(max(totalSolvesByDate))]), sep='')
 
     plt.legend(['Time spent (s)', 'Solves'])
     plt.show()
