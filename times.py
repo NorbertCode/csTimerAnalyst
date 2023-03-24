@@ -1,3 +1,19 @@
+def TimesToFloats(times):
+    floatTimes = []
+    for i in times:
+        # Remove csTimer's special characters
+        parsedString = str(i).replace('+', '')
+        parsedString = parsedString.replace('*', '')
+
+        parsedTimes = [float(x) for x in parsedString.split(':')] # If a time is less than a minute (so in a format like 12.45) it's automatically taken as a float
+        for j in range(len(parsedTimes)):
+            if j < len(parsedTimes) - 1:
+                parsedTimes[j + 1] += parsedTimes[j] * 60
+
+        floatTimes.append(parsedTimes[-1])
+
+    return floatTimes
+
 def CalculateAverage(times):
     # Cubing average is calculated by removing the worst and best time, and calculating the mean of the rest
     times.remove(min(times))
