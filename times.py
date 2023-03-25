@@ -1,3 +1,5 @@
+from matplotlib import pyplot as plt
+
 def TimesToFloats(times):
     floatTimes = []
     for i in times:
