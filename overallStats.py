@@ -5,20 +5,24 @@ import times
 
 # Converts the amount of seconds to a string in a format like 1:15.2
 def SecondsToTime(seconds):
-    minutes = round(seconds // 60)
-    seconds -= minutes * 60
+    timeUnits = [seconds, 0, 0] # Seconds, minutes, hours
 
-    hours = round(minutes // 60)
-    minutes -= hours * 60
+    # Set up timeUnits to make it have correct values
+    for i in range(1, len(timeUnits)):
+        timeUnits[i] = round(timeUnits[i - 1] // 60)
+        timeUnits[i - 1] -= timeUnits[i] * 60
 
-    time = str(round(seconds, 2))
-    if (minutes > 0):
-        time = str(minutes) + ":" + time
+    # Format it to a string
+    time = ''
+    for i in timeUnits:
+        if i > 0:
+            time = str(round(i, 2)) + time
+            if len(str(i).split('.')[0]) < 2:
+                time = ':0' + time
+            else:
+                time = ':' + time
 
-    if (hours > 0):
-        time = str(hours) + ":" + time
-
-    return time
+    return time[1:] # The loop above adds an additional : at index 0
 
 def GetSessionStats(df):
     firstDay = dt.strptime(df['Date'][0], '%Y-%m-%d %H:%M:%S')
