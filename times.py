@@ -1,3 +1,5 @@
+from matplotlib import pyplot as plt
+
 def TimesToFloats(times):
     floatTimes = []
     for i in times:
@@ -27,8 +29,6 @@ def CalculateAO(times, ao = 5):
     for i in range(0, len(times)):
         if i >= ao - 1:
             averages.append(CalculateAverage(times[i - (ao - 1):i + 1])) # Get the newest and (ao-1) previous times
-        else:
-            averages.append(times[0])
 
     return averages
 
