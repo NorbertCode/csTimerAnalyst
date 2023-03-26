@@ -9,18 +9,24 @@ class CommandLine:
                 fileName = input('Please enter the path to your session file: ')
                 self.analyser = an.Analyser(fileName)
                 break
-            except:
+            except Exception as e:
                 print('Invalid file path. Please try again.')
+                print(e)
         print('\nEnter \'help\' to get a list of all available commands.')
         while True:
-            command, args = input().split(' -') # todo: this throws an error if it cant split
+            userInput = input().split(' -') # todo: this throws an error if it cant split
+            command = userInput[0]
+            args = userInput[1] if len(userInput) > 1 else ''
             if command == 'help':
                 self.Help()
             elif command == 'timesgraph':
-                ao = []
-                for i in args.split(','):
-                    ao.append(int(i))
-                self.analyser.ShowTimesGraph(ao)
+                if args != '':
+                    ao = []
+                    for i in args.split(','):
+                        ao.append(int(i))
+                    self.analyser.ShowTimesGraph(ao)
+                else:
+                    self.analyser.ShowTimesGraph()
             elif command == 'solvesbydate':
                 self.analyser.ShowSolvesByDayGraph()
             elif command =='exit':
