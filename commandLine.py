@@ -9,37 +9,44 @@ class CommandLine:
                 fileName = input('Please enter the path to your session file: ')
                 self.analyser = an.Analyser(fileName)
                 break
-            except Exception as e:
+            except:
                 print('Invalid file path. Please try again.')
-                print(e)
         print('\nEnter \'help\' to get a list of all available commands.')
         while True:
-            userInput = input().split(' -') # todo: this throws an error if it cant split
+            userInput = input('> ').split(' ')
             command = userInput[0]
             args = userInput[1] if len(userInput) > 1 else ''
+            
             if command == 'help':
                 self.Help()
+
             elif command == 'timesgraph':
                 if args != '':
-                    ao = []
-                    for i in args.split(','):
-                        ao.append(int(i))
-                    self.analyser.ShowTimesGraph(ao)
+                    try:
+                        ao = []
+                        for i in args.split(','):
+                            ao.append(int(i))
+                        self.analyser.ShowTimesGraph(ao)
+                    except:
+                        print('Invalid arguments. Please make your you didn\'t put spaces between them.')
                 else:
                     self.analyser.ShowTimesGraph()
+
             elif command == 'solvesbydate':
                 self.analyser.ShowSolvesByDayGraph()
+
             elif command =='exit':
                 break
+
             else:
                 print('Invalid command')
 
     def Help(self):
-        print('timesgraph -args     -Shows a graph of all singles times and averages specificed in args (e.g. timesgraph -5,12,100)\n',
-              'solvesbydate     -Shows a graph of solves and total times by date\n',
-              'exit    -Exits the program\n',
-              'help     -List of all commands\n',
-              sep='')
+        print('timesgraph args     -Shows a graph of all singles times and averages specificed in args (e.g. timesgraph 5,12,100). If arguments are left empty it defaults to 5 and 12',
+              'solvesbydate     -Shows a graph of solves and total times by date',
+              'exit    -Exits the program',
+              'help     -List of all commands',
+              sep='\n')
 
 
 if __name__ == '__main__':
