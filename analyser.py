@@ -27,7 +27,7 @@ class Analyser:
         plt.plot(self.df['No.'], self.singles)
 
         for i in aoTypes:
-            plt.plot(self.df['No.'], times.CalculateAO(self.singles, i))
+            plt.plot(self.df['No.'][i - 1:], times.CalculateAO(self.singles, i))
 
         timeNumbers, personalbests = times.PersonalBestProgression(self.singles)
         plt.plot(timeNumbers, personalbests, 'o')
