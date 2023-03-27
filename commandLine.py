@@ -68,6 +68,8 @@ class CommandLine:
         except:
             print('Invalid file path. Please try again.')
 
+        self.ShowValues()
+
     def Help(self):
         print('timesgraph args     -Shows a graph of all singles times and averages specificed in args (e.g. timesgraph 5,12,100). If arguments are left empty it defaults to 5 and 12',
               'solvesbydate     -Shows a graph of solves and total times by date',
