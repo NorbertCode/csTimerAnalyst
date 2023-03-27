@@ -1,6 +1,5 @@
 import pandas as pd
 from matplotlib import pyplot as plt
-from datetime import timedelta, datetime as dt
 
 import times as times
 import overallStats as os
@@ -55,5 +54,5 @@ class Analyser:
             subs.append('over 60')
             values.append(len(overSixty))
 
-        plt.pie(values, labels=subs)
+        plt.pie(values, labels=subs, autopct=lambda x: '{:.0f}'.format(x * sum(values) / 100), startangle=90)
         plt.show()
