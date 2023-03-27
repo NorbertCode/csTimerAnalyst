@@ -13,7 +13,7 @@ class CommandLine:
 
         self.ShowValues()
         print('\nEnter \'help\' to get a list of all available commands.')
-        
+
         while True:
             userInput = input('> ').split(' ')
             command = userInput[0]
@@ -36,6 +36,9 @@ class CommandLine:
 
             elif command == 'solvesbydate':
                 self.analyser.ShowSolvesByDayGraph()
+
+            elif command == 'subchart':
+                self.analyser.ShowSubChart()
 
             elif command == 'load':
                 if args != '':
@@ -68,6 +71,7 @@ class CommandLine:
     def Help(self):
         print('timesgraph args     -Shows a graph of all singles times and averages specificed in args (e.g. timesgraph 5,12,100). If arguments are left empty it defaults to 5 and 12',
               'solvesbydate     -Shows a graph of solves and total times by date',
+              'subchart     -Shows a pie chart of how many solves belong to each subX category'
               'load path     -Loads the session csv file at the given path (e.g. load 3x3.csv)'
               'exit    -Exits the program',
               'help     -List of all commands',
