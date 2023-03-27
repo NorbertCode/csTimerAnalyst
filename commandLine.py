@@ -1,4 +1,5 @@
 import analyser as an
+import overallStats as os
 
 class CommandLine:
     def __init__(self):
@@ -9,7 +10,10 @@ class CommandLine:
                 break
             except:
                 print('Invalid file path. Please try again.')
+
+        self.ShowValues()
         print('\nEnter \'help\' to get a list of all available commands.')
+        
         while True:
             userInput = input('> ').split(' ')
             command = userInput[0]
@@ -44,6 +48,16 @@ class CommandLine:
 
             else:
                 print('Invalid command')
+
+    def ShowValues(self):
+        print('Total mean:', os.SecondsToTime(self.analyser.mean))
+        print('Personal best:', os.SecondsToTime(self.analyser.pb))
+        print('Total time spent:', self.analyser.totalTimeSpent)
+        print('Most days in a row:', self.analyser.mostDaysInARow)
+        print('Most days break:', self.analyser.mostDaysBreak)
+        mostSolvesDate = self.analyser.allDays[self.analyser.totalSolvesByDate.index(max(self.analyser.totalSolvesByDate))]
+        timeSpentOnMostSolves = os.SecondsToTime(self.analyser.totalTimeByDate[self.analyser.totalSolvesByDate.index(max(self.analyser.totalSolvesByDate))])
+        print('The most solves (', max(self.analyser.totalSolvesByDate), ') were done on ', mostSolvesDate, '. The total time spent that day is ', timeSpentOnMostSolves, sep='')
 
     def LoadFile(self, path):
         try:
