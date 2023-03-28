@@ -1,6 +1,5 @@
 import pandas as pd
 from matplotlib import pyplot as plt
-from datetime import timedelta, datetime as dt
 
 import times as times
 import overallStats as os
@@ -10,18 +9,11 @@ class Analyser:
         self.df = pd.read_csv(fileName, delimiter=';')
 
         self.singles = times.TimesToFloats(self.df['Time'])
+        self.mean = sum(self.singles) / len(self.singles)
         self.pb = min(self.singles)    
         self.totalTimeSpent = os.SecondsToTime(sum(self.singles))
         self.allDays, self.totalTimeByDate, self.totalSolvesByDate = os.GetSessionStats(self.df)
-        self.mostDaysInARow, mostDaysBreak = os.GetDaysInARow(self.df, self.allDays)
-
-        print('Personal best:', os.SecondsToTime(self.pb))
-        print('Total time spent:', self.totalTimeSpent)
-        print('Most days in a row:', self.mostDaysInARow)
-        print('Most days break:', mostDaysBreak)
-        mostSolvesDate = self.allDays[self.totalSolvesByDate.index(max(self.totalSolvesByDate))]
-        timeSpentOnMostSolves = os.SecondsToTime(self.totalTimeByDate[self.totalSolvesByDate.index(max(self.totalSolvesByDate))])
-        print('The most solves (', max(self.totalSolvesByDate), ') were done on ', mostSolvesDate, '. The total time spent that day is ', timeSpentOnMostSolves, sep='')
+        self.mostDaysInARow, self.mostDaysBreak = os.GetDaysInARow(self.df, self.allDays)
 
     def ShowTimesGraph(self, aoTypes = [5, 12]):
         plt.plot(self.df['No.'], self.singles)
@@ -44,4 +36,23 @@ class Analyser:
         plt.plot(self.allDays, self.totalSolvesByDate)
 
         plt.legend(['Time spent (s)', 'Solves'])
+        plt.show()
+
+    def ShowSubChart(self):
+        subs = []
+        values = []
+        for i in range(0, 60, 5):
+            subSolves = [time for time in self.singles if time < i + 5 and time >= i]
+            if len(subSolves) > 0:
+                values.append(len(subSolves))
+                subs.append('sub' + str(i + 5))
+
+        # Since the loop only takes solves between two sub levels (e.g. sub15 are solves between 10 and 15)
+        # and over60 solves don't have an upper ceiling they have to be handled differently
+        overSixty = [time for time in self.singles if time >= 60]
+        if len(overSixty) > 0:
+            subs.append('over 60')
+            values.append(len(overSixty))
+
+        plt.pie(values, labels=subs, autopct=lambda x: '{:.0f}'.format(x * sum(values) / 100), startangle=90)
         plt.show()
