@@ -38,14 +38,14 @@ class Analyser:
         plt.legend(['Time spent (s)', 'Solves'])
         plt.show()
 
-    def ShowSubChart(self):
+    def ShowSubChart(self, intervals = 5):
         subs = []
         values = []
-        for i in range(0, 60, 5):
-            subSolves = [time for time in self.singles if time < i + 5 and time >= i]
+        for i in range(0, 60, intervals):
+            subSolves = [time for time in self.singles if time < i + intervals and time >= i]
             if len(subSolves) > 0:
                 values.append(len(subSolves))
-                subs.append('sub' + str(i + 5))
+                subs.append('sub' + str(i + intervals))
 
         # Since the loop only takes solves between two sub levels (e.g. sub15 are solves between 10 and 15)
         # and over60 solves don't have an upper ceiling they have to be handled differently
