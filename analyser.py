@@ -39,20 +39,15 @@ class Analyser:
         plt.show()
 
     def ShowSubChart(self, intervals = 5):
+        maxValue = int(round(max(self.singles), 0)) + intervals # intervals is added to make sure all singles are taken into account
+
         subs = []
         values = []
-        for i in range(0, 60, intervals):
+        for i in range(0, maxValue, intervals):
             subSolves = [time for time in self.singles if time < i + intervals and time >= i]
             if len(subSolves) > 0:
                 values.append(len(subSolves))
                 subs.append('sub' + str(i + intervals))
-
-        # Since the loop only takes solves between two sub levels (e.g. sub15 are solves between 10 and 15)
-        # and over60 solves don't have an upper ceiling they have to be handled differently
-        overSixty = [time for time in self.singles if time >= 60]
-        if len(overSixty) > 0:
-            subs.append('over 60')
-            values.append(len(overSixty))
 
         plt.pie(values, labels=subs, autopct=lambda x: '{:.0f}'.format(x * sum(values) / 100), startangle=90)
         plt.show()
