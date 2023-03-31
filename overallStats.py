@@ -1,6 +1,4 @@
-from matplotlib import pyplot as plt
 from datetime import timedelta, datetime as dt
-
 import times
 
 # Converts the amount of seconds to a string in a format like 1:15.2
