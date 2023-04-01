@@ -5,4 +5,4 @@ csTimerAnalyst is a simple tool, which gives you lots of interesting data about 
 Before you start using this app you have to have [Python](https://www.python.org/downloads/) and install `matplotlib` and `pandas`.
 
 # Usage
-Run the `commandLine.py` script. It will prompt you to give your .csv file's path. After that you have access to a simple cli, which allows you to get more data about your session.
+You can either run `commandLine.py` or `gui.py`. Both will prompt you to load your session .csv file and give you some basic data. Currently only the CLI version allows graph customisation.
