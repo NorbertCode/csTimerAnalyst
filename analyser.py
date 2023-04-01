@@ -1,5 +1,5 @@
 import pandas as pd
-from matplotlib import pyplot as plt
+from matplotlib import dates, pyplot as plt
 
 import times as times
 import overallStats as os
@@ -14,6 +14,8 @@ class Analyser:
         self.totalTimeSpent = os.SecondsToTime(sum(self.singles))
         self.allDays, self.totalTimeByDate, self.totalSolvesByDate = os.GetSessionStats(self.df)
         self.mostDaysInARow, self.mostDaysBreak = os.GetDaysInARow(self.df, self.allDays)
+
+        plt.style.use('seaborn-whitegrid')
 
     def ShowTimesGraph(self, aoTypes = [5, 12]):
         plt.plot(self.df['No.'], self.singles)
@@ -34,6 +36,9 @@ class Analyser:
     def ShowSolvesByDayGraph(self):
         plt.plot(self.allDays, self.totalTimeByDate)
         plt.plot(self.allDays, self.totalSolvesByDate)
+
+        plt.xticks(rotation=30)
+        plt.gca().xaxis.set_major_formatter(dates.DateFormatter('%d %b'))
 
         plt.legend(['Time spent (s)', 'Solves'])
         plt.show()
